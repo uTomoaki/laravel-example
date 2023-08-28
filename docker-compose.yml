@@ -1,0 +1,28 @@
+version: '3'
+services:
+  app:
+    container_name: laravel-app
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    volumes:
+      - ./laravel-app:/var/www/laravel-app
+    ports:
+      - "8000:8000"
+    environment:
+      - XDEBUG_MODE=debug
+      - XDEBUG_CONFIG=client_host=host.docker.internal client_port=9010 start_with_request=yes
+      - PHP_IDE_CONFIG=serverName=localhost
+
+  db:
+    container_name: laravel-db
+    build:
+      context: ./docker/db
+      dockerfile: Dockerfile
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  db_data:
