@@ -21,9 +21,12 @@ jobs:
 
       - name: Composer install
         run: composer install
+        working-directory: ./laravel-app
 
       - name: Larastan install
         run: composer require larastan/larastan --dev
+        working-directory: ./laravel-app
 
       - name: Run Larastan
         run: ./vendor/bin/phpstan analyse
+        working-directory: ./laravel-app
