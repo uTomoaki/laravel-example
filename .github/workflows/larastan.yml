@@ -21,7 +21,6 @@ jobs:
 
       - name: Composer install
         run: composer install
-        working-directory: ./src
 
       - name: Larastan install
         run: composer require larastan/larastan --dev
