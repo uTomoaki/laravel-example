@@ -5,7 +5,7 @@ on:
     types: [opened, reopened]
 
 jobs:
-  phpstan:
+  larastan:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.6.0
@@ -21,10 +21,12 @@ jobs:
 
       - name: Composer install
         run: composer install
-        working-directory: ./src
+        working-directory: ./laravel-app
 
       - name: Larastan install
         run: composer require larastan/larastan --dev
+        working-directory: ./laravel-app
 
       - name: Run Larastan
         run: ./vendor/bin/phpstan analyse
+        working-directory: ./laravel-app
