@@ -1,0 +1,32 @@
+name: Larastan
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  larastan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.6.0
+        with:
+          fetch-depth: 0
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer, cs2pr
+          coverage: none
+
+      - name: Composer install
+        run: composer install
+        working-directory: ./laravel-app
+
+      - name: Larastan install
+        run: composer require larastan/larastan --dev
+        working-directory: ./laravel-app
+
+      - name: Run Larastan
+        run: ./vendor/bin/phpstan analyse
+        working-directory: ./laravel-app
